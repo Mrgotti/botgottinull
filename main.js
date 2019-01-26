@@ -3,7 +3,7 @@ const Enmap = require("enmap");
 const fs = require("fs");
 
 const client = new Discord.Client();
-
+const token = process.env.token
 const config = require("./config.json");
 client.config = config; // attacher le fichier config au client (accéder a la config partout)
 
@@ -44,4 +44,4 @@ fs.readdir("./commands", (err, files) => {
 
 
 
-client.login(config.token);
+client.login(token);
