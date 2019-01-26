@@ -1,7 +1,6 @@
 const Discord = require("discord.js");
 const Enmap = require("enmap");
 const fs = require("fs");
-const token = process.env.token
 
 const client = new Discord.Client();
 
@@ -45,4 +44,4 @@ fs.readdir("./commands", (err, files) => {
 
 
 
-client.login(token);
+client.login(config.token);
