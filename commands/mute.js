@@ -9,7 +9,7 @@ module.exports.run = async (bot, message, args) => {
   if(!tomute) return message.reply("Couldn't find user.");
   if(tomute.hasPermission("MANAGE_MESSAGES")) return message.reply("Je ne peut pas mute un dieu!");
   let muterole = message.guild.roles.find(`name`, "muted");
-  //start of create role
+  
   if(!muterole){
     try{
       muterole = await message.guild.createRole({
@@ -27,7 +27,7 @@ module.exports.run = async (bot, message, args) => {
       console.log(e.stack);
     }
   }
-  //end of create role
+  
   let mutetime = args[1];
   if(!mutetime) return message.reply("tu n'as pas spécifié la duré du mute !");
 
@@ -40,7 +40,7 @@ module.exports.run = async (bot, message, args) => {
   }, ms(mutetime));
 
 
-//end of module
+
 }
 
 module.exports.help = {

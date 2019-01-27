@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 exports.run = async(client, message, [mention, ...reason]) => {
     const modRole = message.guild.roles.find(role => role.name === "Mods");
     if(!modRole) {
-        message.channel.send("l'utilisateur nexiste pas ou non reconnue");
+        message.channel.send("l'utilisateur n'éxiste pas ou non reconnue");
     } else {
         if(message.member.roles.has(modRole.id)) {
             if(message.mentions.members.size>0) {

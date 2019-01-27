@@ -6,8 +6,9 @@ exports.run = (client,message) => {
     .setThumbnail(clientIcon) 
     .setDescription("Voici quelques informations sur moi-même et mon créateur.") 
     .addField(":tools: Mon créateur est `MrGotti#3193`","Je le remercie de m'avoir créer! :wink:")
-    .addField("🗯️Dans " + client.channels.size + " serveurs avec " + client.users.size + " utilisateurs par jours :boy:","Version 0.3.0")
-    .setColor('RANDOM');
+    .addField("🗯️Dans " + client.channels.size + " serveurs avec " + client.users.size + " utilisateurs par jours :boy:","Version 1.0.0")
+    .setColor('#FF0000')
+    .setFooter("© 2019 - bot par MrGotti");
         
         
 
