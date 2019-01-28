@@ -4,7 +4,7 @@ exports.run = (client,message) => {
     let clientIcon = client.user.displayAvatarURL; {}
     const embed = new Discord.RichEmbed()
     .setThumbnail("http://web-fabrique.fr/public/images/list-icons/ecrou.png")
-    .setTitle ("`Changelog version 1.0.0`")
+    .setTitle ("`Changelog version 1.5.0`")
     .setDescription("``Ici vous pourrez voir l'avancer de mon developpement.``")
     .addField("\u2022 commande mute bug , bug role + ajout duré plus simplifier", "OK :ok_hand:")
     .addField("\u2022 Bibliothèque pour le quizz", "prochainement... ")
