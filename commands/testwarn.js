@@ -28,7 +28,7 @@ module.exports.run = async (bot, message, args) => {
   .setColor("#fc6400")
   .addField("U", `<@${wUser.id}>`)
   .addField("Reporter par", message.channel)
-  .addField("Numbres de reports", warns[wUser.id].warns)
+  .addField("Nombres de reports", warns[wUser.id].warns)
   .addField("raisons", reason);
 
   let warnchannel = message.guild.channels.find(`name`, "logs");
@@ -38,20 +38,20 @@ module.exports.run = async (bot, message, args) => {
 
   if(warns[wUser.id].warns == 2){
     let muterole = message.guild.roles.find(`name`, "muted");
-    if(!muterole) return message.reply("You should create that role dude.");
+    if(!muterole) return message.reply("Je ne trouve pas le roles muted, creer le pour m'utiliser.");
 
     let mutetime = "10s";
     await(wUser.addRole(muterole.id));
-    message.channel.send(`<@${wUser.id}> has been temporarily muted`);
+    message.channel.send(`<@${wUser.id}> est temporairement muter!(2 reports)`);
 
     setTimeout(function(){
       wUser.removeRole(muterole.id)
-      message.reply(`<@${wUser.id}> has been unmuted.`)
+      message.reply(`<@${wUser.id}> n est plus muter.`)
     }, ms(mutetime))
   }
   if(warns[wUser.id].warns == 3){
     message.guild.member(wUser).ban(reason);
-    message.reply(`<@${wUser.id}> has been banned.`)
+    message.reply(`<@${wUser.id}> est banni! (3 reports)`)
   }
 
 }
