@@ -18,7 +18,11 @@ exports.run = (client,message) => {
     .addField ("\u2022 migrations hébergement bot ", "OK :ok_hand:")
     .addField ("\u2022 commande infoserv ", "OK :ok_hand:")
     .addField ("\u2022 commande mute + creation sur tout les serveurs du roles muted automatiquement ", "OK :ok_hand:")
-    
+    .addField ("\u2022 commande whois (informations utilisateur) ", "OK :ok_hand:")
+    .addField ("\u2022 commande sondage  ", "OK :ok_hand:")
+    .addField ("\u2022 Refonte du code pour plus de simplicité et de fonctionalitées passage a la versions 2.0.0 ", ":hammer_pick:  en cours...")
+    .addField ("\u2022 ajout d'une base de donné pour stocké les informations ", ":hammer_pick:  en cours...")
+    .addField ("\u2022 Créations du changelog pour la 2.0.0 ", ":hammer_pick:  en cours...")
     
 
 
