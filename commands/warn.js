@@ -6,10 +6,10 @@ let warns = JSON.parse(fs.readFileSync("./warnings.json", "utf8"));
 module.exports.run = async (bot, message, args) => {
 
   //!warn @daeshan <reason>
-  if(!message.member.hasPermission("MANAGE_MEMBERS")) return message.reply("Quoi tu veux que je warn un dieu? Tu peut allez te faire foutre!");
+  if(!message.member.hasPermission("MANAGE_MEMBERS")) return message.reply("No can do pal!");
   let wUser = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0])
-  if(!wUser) return message.reply("l'utilisateur n'éxiste pas ou non reconnue");
-  if(wUser.hasPermission("MANAGE_MESSAGES")) return message.reply("test");
+  if(!wUser) return message.reply("Couldn't find them yo");
+  if(wUser.hasPermission("MANAGE_MESSAGES")) return message.reply("They waaaay too kewl");
   let reason = args.join(" ").slice(22);
 
   if(!warns[wUser.id]) warns[wUser.id] = {
@@ -23,35 +23,35 @@ module.exports.run = async (bot, message, args) => {
   });
 
   let warnEmbed = new Discord.RichEmbed()
-  .setDescription("Reports")
+  .setDescription("Warns")
   .setAuthor(message.author.username)
   .setColor("#fc6400")
-  .addField("U", `<@${wUser.id}>`)
-  .addField("Reporter par", message.channel)
-  .addField("Nombres de reports", warns[wUser.id].warns)
-  .addField("raisons", reason);
+  .addField("Warned User", `<@${wUser.id}>`)
+  .addField("Warned In", message.channel)
+  .addField("Number of Warnings", warns[wUser.id].warns)
+  .addField("Reason", reason);
 
-  let warnchannel = message.guild.channels.find(`name`, "logs");
-  if(!warnchannel) return message.reply("Je ne trouve pas le salon logs! Créer le pour utilisé cette commande!");
+  let warnchannel = message.guild.channels.find(`name`, "incidents");
+  if(!warnchannel) return message.reply("Couldn't find channel");
 
   warnchannel.send(warnEmbed);
 
   if(warns[wUser.id].warns == 2){
     let muterole = message.guild.roles.find(`name`, "muted");
-    if(!muterole) return message.reply("Je ne trouve pas le roles muted, creer le pour m'utiliser.");
+    if(!muterole) return message.reply("You should create that role dude.");
 
     let mutetime = "10s";
     await(wUser.addRole(muterole.id));
-    message.channel.send(`<@${wUser.id}> est temporairement muter!(2 reports)`);
+    message.channel.send(`<@${wUser.id}> has been temporarily muted`);
 
     setTimeout(function(){
       wUser.removeRole(muterole.id)
-      message.reply(`<@${wUser.id}> n est plus muter.`)
+      message.reply(`<@${wUser.id}> has been unmuted.`)
     }, ms(mutetime))
   }
   if(warns[wUser.id].warns == 3){
     message.guild.member(wUser).ban(reason);
-    message.reply(`<@${wUser.id}> est banni! (3 reports)`)
+    message.reply(`<@${wUser.id}> has been banned.`)
   }
 
 }

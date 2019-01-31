@@ -1,21 +1,36 @@
 const Discord = require("discord.js");
-exports.run = (client, message, [mention, ...reason]) => {
-  const modRole = message.guild.roles.find(role => role.name === "Mods");
-  if (!modRole)
-    return console.log("Le role Mods n'hésite pas!");
+const errors = require("../utils/errors.js");
 
-  if (!message.member.roles.has(modRole.id))
-    return message.reply("Hey oh ?!!! Tu n'a pas les droits de faire cela!");
+module.exports.run = async (bot, message, args) => {
+    message.delete();
+    if(!message.member.hasPermission("BAN_MEMBERS")) return errors.noPerms(message, "BAN_MEMBERS");
+    if(args[0] == "help"){
+      message.reply("Usage: !ban <user> <reason>");
+      return;
+    }
+    let bUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
+    if(!bUser) return errors.cantfindUser(message.channel);
+    if(bUser.id === bot.user.id) return errors.botuser(message); 
+    let bReason = args.join(" ").slice(22);
+    if(!bReason) return errors.noReason(message.channel);
+    if(bUser.hasPermission("MANAGE_MESSAGES")) return errors.equalPerms(message, bUser, "MANAGE_MESSAGES");
 
-  if (message.mentions.members.size === 0)
-    return message.reply("Mentionne l'utilisateur pour le banni!");
+    let banEmbed = new Discord.RichEmbed()
+    .setDescription("~Ban~")
+    .setColor("#bc0000")
+    .addField("Banned User", `${bUser} with ID ${bUser.id}`)
+    .addField("Banned By", `<@${message.author.id}> with ID ${message.author.id}`)
+    .addField("Banned In", message.channel)
+    .addField("Time", message.createdAt)
+    .addField("Reason", bReason);
 
-  if (!message.guild.me.hasPermission("BAN_MEMBERS"))
-    return message.reply("");
+    let incidentchannel = message.guild.channels.find(`name`, "incidents");
+    if(!incidentchannel) return message.channel.send("Can't find incidents channel.");
 
-  const banMember = message.mentions.members.first();
+    message.guild.member(bUser).ban(bReason);
+    incidentchannel.send(banEmbed);
+}
 
-  banMember.ban(reason.join(" ")).then(member => {
-    message.reply(`${member.user.username} a été banni avec succès. Il nous enmerdera moins celui la!.`);
-  });
-};
+module.exports.help = {
+  name:"ban"
+}
